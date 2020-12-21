@@ -25,6 +25,9 @@ const FullScreenHeight int32 = 720
 // FullScreen ...
 var FullScreen bool = false
 
+// ResulutionScaling ...
+var ResulutionScaling int32
+
 // Font ...
 var Font rl.Font
 
@@ -41,6 +44,8 @@ func main() {
 	rl.SetConfigFlags(rl.FlagVsyncHint)
 	rl.InitWindow(ScreenWidth, ScreenHeight, GameName)
 	rl.SetTargetFPS(60)
+	ResulutionScaling = ((int32(rl.GetScreenWidth()) + int32(rl.GetScreenHeight())) / 25)
+	log.Println("ResulutionScaling set to: ", ResulutionScaling)
 
 	// Load Font
 	Font = rl.LoadFont("bscePixel.ttf")
@@ -61,6 +66,8 @@ func main() {
 				rl.SetConfigFlags(rl.FlagVsyncHint)
 				rl.InitWindow(ScreenWidth, ScreenHeight, GameName)
 				rl.SetTargetFPS(60)
+				Font = rl.LoadFont("bscePixel.ttf")
+				ResulutionScaling = ((int32(rl.GetScreenWidth()) + int32(rl.GetScreenHeight())) / 25)
 				FullScreen = false
 
 			case false:
@@ -70,6 +77,8 @@ func main() {
 				rl.SetConfigFlags(rl.FlagWindowUndecorated)
 				rl.InitWindow(FullScreenWidth, FullScreenHeight, GameName)
 				rl.SetTargetFPS(60)
+				Font = rl.LoadFont("bscePixel.ttf")
+				ResulutionScaling = ((int32(rl.GetScreenWidth()) + int32(rl.GetScreenHeight())) / 25)
 				FullScreen = true
 			}
 		}

@@ -5,7 +5,6 @@ import (
 
 	"log"
 
-	rg "github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -23,9 +22,8 @@ func SceneMenu() {
 	// Background
 	rl.ClearBackground(rl.Gray)
 
-	// Begin UI
-	rg.Button(rl.NewRectangle(float32(rl.GetScreenWidth()/2-50), float32(rl.GetScreenHeight()/2-25), 100, 50), "Start")
-	// End UI
+	// UI
+	rl.DrawTextEx(Font, GameName, rl.NewVector2(float32(rl.GetScreenWidth()/2), float32(rl.GetScreenHeight()/2)), float32(ResulutionScaling), 0, rl.White)
 
 	rl.EndDrawing()
 }
