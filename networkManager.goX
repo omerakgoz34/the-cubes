@@ -9,6 +9,8 @@ import (
     ws "github.com/gorilla/websocket"
 )
 
+// var url url.URL // := url.URL{Scheme: "ws", Host: addr, Path: "/"}
+
 func networkManager() {
     if mode == "host" {
         upgrader := ws.Upgrader{}

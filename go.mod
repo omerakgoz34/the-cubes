@@ -1,4 +1,4 @@
-module the-cubes
+module github.com/omerakgoz34/the-cubes
 
 go 1.15
 
