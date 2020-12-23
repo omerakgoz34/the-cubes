@@ -5,24 +5,21 @@ import (
 	"log"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
+	"github.com/kbinani/screenshot"
 )
 
 const (
-	// DefaultScreenWidth ...
-	DefaultScreenWidth int32 = 800
-	// DefaultScreenHeight ...
-	DefaultScreenHeight int32 = 500
-	// DefaultFullScreenWidth ...
-	DefaultFullScreenWidth int32 = 1280
-	// DefaultFullScreenHeight ...
-	DefaultFullScreenHeight int32 = 720
 	// DefaultFont ...
-	DefaultFont string = "resource/fontPixel.ttf"
+	DefaultFont string = "res/fontPixel.ttf"
 )
 
 type game struct {
 	Name              string
 	FullScreen        bool
+	ScreenWidth       int32
+	ScreenHeight      int32
+	FullScreenWidth   int32
+	FullScreenHeight  int32
 	ResulutionScaling float32
 	Font              rl.Font
 	CurrentScene      string
@@ -33,6 +30,10 @@ type game struct {
 var Game = game{
 	Name:              "The Cubes",
 	FullScreen:        false,
+	ScreenWidth:       960,
+	ScreenHeight:      540,
+	FullScreenWidth:   960,
+	FullScreenHeight:  540,
 	ResulutionScaling: 50.0,
 	CurrentScene:      "menu",
 	CursorColor:       rl.White,
@@ -43,10 +44,14 @@ func main() {
 	log.SetFlags(0)
 	log.SetPrefix(fmt.Sprint(Game.Name, " >>> "))
 
+	// Get Screen Resolution
+	Game.FullScreenWidth = int32(screenshot.GetDisplayBounds(0).Dx())
+	Game.FullScreenHeight = int32(screenshot.GetDisplayBounds(0).Dy())
+
 	// Init Raylib
 	log.Println("Starting and Setting Raylib...")
 	rl.SetConfigFlags(rl.FlagVsyncHint)
-	rl.InitWindow(DefaultScreenWidth, DefaultScreenHeight, Game.Name)
+	rl.InitWindow(Game.ScreenWidth, Game.ScreenHeight, Game.Name)
 	rl.SetTargetFPS(60)
 	rl.HideCursor()
 	Game.Font = rl.LoadFont(DefaultFont)
@@ -65,10 +70,10 @@ func main() {
 		if rl.IsKeyPressed(rl.KeyF11) {
 			switch Game.FullScreen {
 			case true:
-				log.Println("Switching to windowed mode...")
+				log.Println("Switching to Windowed Mode...")
 				rl.CloseWindow()
 				rl.SetConfigFlags(rl.FlagVsyncHint)
-				rl.InitWindow(DefaultScreenWidth, DefaultScreenHeight, Game.Name)
+				rl.InitWindow(Game.ScreenWidth, Game.ScreenHeight, Game.Name)
 				rl.SetTargetFPS(60)
 				rl.HideCursor()
 				Game.Font = rl.LoadFont(DefaultFont)
@@ -76,11 +81,11 @@ func main() {
 				Game.FullScreen = false
 
 			case false:
-				log.Println("Switching to fullscreen mode...")
+				log.Println("Switching to Fullscreen Mode...")
 				rl.CloseWindow()
 				rl.SetConfigFlags(rl.FlagVsyncHint)
 				rl.SetConfigFlags(rl.FlagWindowUndecorated)
-				rl.InitWindow(DefaultFullScreenWidth, DefaultFullScreenHeight, Game.Name)
+				rl.InitWindow(Game.FullScreenWidth, Game.FullScreenHeight, Game.Name)
 				rl.SetTargetFPS(60)
 				rl.HideCursor()
 				Game.Font = rl.LoadFont(DefaultFont)
